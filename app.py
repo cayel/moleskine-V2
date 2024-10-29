@@ -31,11 +31,25 @@ def main():
         st.write(f"Vous avez sélectionné : {selected_artist}")
         
     releases = fetch_releases(API_URL)
-    releases_titles = [release['release_title'] for release in releases]
 
-    if releases_titles:
-        selected_release = st.selectbox("Sélectionnez un disques", releases_titles)
-        st.write(f"Vous avez sélectionné : {selected_release}")
+    if releases:
+        release_data = [(release['release_title'], release['release_date']) for release in releases]
+        
+        # Créer un tableau HTML
+        html_table = """
+        <table>
+            <tr>
+                <th>Nom du disque</th>
+                <th>Date de sortie</th>
+            </tr>
+        """
+        for title, date in release_data:
+            html_table += f"<tr><td>{title}</td><td>{date}</td></tr>"
+        
+        html_table += "</table>"
+        
+        # Afficher le tableau HTML
+        st.markdown(html_table, unsafe_allow_html=True)
         
 
 if __name__ == "__main__":
