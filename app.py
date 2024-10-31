@@ -13,10 +13,5 @@ def main():
     pg = st.navigation(pages)
     pg.run()
     
-    # init database
-    # drop_database()
-    # create_database()
-    # seed_database()
-    
 if __name__ == "__main__":
     main()
