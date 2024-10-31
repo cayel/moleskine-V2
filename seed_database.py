@@ -4,6 +4,7 @@ def seed_database():
     add_artist("Nick Cave & The Bad Seeds")
     add_artist("Einstürzende Neubauten")
     add_artist("New Model Army")
+    add_artist("The Gun Club")
     
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
@@ -45,10 +46,19 @@ def seed_database():
     add_release("From Here", "2019-08-23", 3, "https://upload.wikimedia.org/wikipedia/en/thumb/8/85/New_Model_Army_-_From_Here.jpg/220px-New_Model_Army_-_From_Here.jpg")
     add_release("Unbroken", "2024-01-26", 3, "https://m.media-amazon.com/images/I/B1f6d+CLoRL._SY240_.jpg")
 
+    add_release("Fire of Love", "1981-08-31", 4, "https://i.discogs.com/zi2M6hCVwJp5oBImwZ1JaaEhoydNVsGVEnbXFYhpbDU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUxODMy/MS0xMjU0NTEyODM1/LmpwZWc.jpeg")  
+    add_release("Miami", "1982-08-01", 4, "https://i.discogs.com/AdDtH0Iy8gRPm5qUq9uo4KayDSNE9rTFZ8HB4TMmodU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUwMDg2/NDktMTM4MjAwOTg4/Ni0zMzEyLmpwZWc.jpeg")
+    add_release("The Las Vegas Story", "1984-08-01", 4, "https://i.discogs.com/-8mewuH1G6SrYUE4TrWmoHt9GTdKCdichxGwo_OPD6g/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgxOTE5/NS0xMzg4MjUxMTg5/LTE3MzEuanBlZw.jpeg")
+    add_release("Mother Juno", "1987-08-01", 4, "https://i.discogs.com/rZkNA9XVlEtwRv7mCievMHcVsVATI6F3CIYCnscfJAA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUxNzY5/NS0xMjY5ODgwMjAw/LmpwZWc.jpeg")
+    add_release("Pastoral Hide and Seek", "1990-08-01", 4, "https://i.discogs.com/GQcnQXdy_oxxSSo3AS4sI94VGPMABf0iH1rf0jPdWEM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNzk0/NzItMTE5MDU5OTMz/Ni5qcGVn.jpeg")  
+    add_release("Divinity", "1991-08-01", 4, "https://i.discogs.com/wNBNv0NsqyBax20H_JeAqkc2OPBKl6oC77hK2CYscYs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MzMz/MDctMTM1MjA1NTE3/My0xNDA3LmpwZWc.jpeg")  
+    add_release("Lucky Jim", "1993-08-01", 4, "https://i.discogs.com/gySQUvUPveSBBj3y7ZPKRAlDEdOYkW-Fk2m6rzSKmOs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg2MDQz/MS0xMTY2MzUxNTcz/LmpwZWc.jpeg")
+
     add_list("Albums de Nick Cave & The Bad Seeds", "Tous les albums des Nick Cave avec les Bad Seeds", False)
     add_list("Albums de Einstürzende Neubauten", "Tous les albums de Einstürzende Neubauten", False)
     add_list("Albums de New Model Army", "Tous les albums de New Model Army", False)
     add_list("Top 1988", "Mon top album 1988", True)
+    add_list("Albums de The Gun Club", "Tous les albums de The Gun Club", False)
 
     add_list_release(1, 1, 1)
     add_list_release(1, 2, 2)
@@ -91,3 +101,13 @@ def seed_database():
     add_list_release(3, 16, 37)
 
     add_list_release(4, 1, 5)
+
+    add_list_release(5, 1, 38)
+    add_list_release(5, 2, 39)
+    add_list_release(5, 3, 40)
+    add_list_release(5, 4, 41)
+    add_list_release(5, 5, 42)
+    add_list_release(5, 6, 43)
+    add_list_release(5, 7, 44)
+
+
