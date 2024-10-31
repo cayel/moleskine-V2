@@ -5,6 +5,7 @@ def seed_database():
     add_artist("Einstürzende Neubauten")
     add_artist("New Model Army")
     add_artist("The Gun Club")
+    add_artist("New Order")
     
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
@@ -54,6 +55,18 @@ def seed_database():
     add_release("Divinity", "1991-08-01", 4, "https://i.discogs.com/wNBNv0NsqyBax20H_JeAqkc2OPBKl6oC77hK2CYscYs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MzMz/MDctMTM1MjA1NTE3/My0xNDA3LmpwZWc.jpeg")  
     add_release("Lucky Jim", "1993-08-01", 4, "https://i.discogs.com/gySQUvUPveSBBj3y7ZPKRAlDEdOYkW-Fk2m6rzSKmOs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg2MDQz/MS0xMTY2MzUxNTcz/LmpwZWc.jpeg")
 
+    add_release("Movement", "1981-11-13", 5, "https://upload.wikimedia.org/wikipedia/en/thumb/8/84/New_Order_Movement_Cover.jpg/440px-New_Order_Movement_Cover.jpg")
+    add_release("Power, Corruption & Lies", "1983-05-02", 5, "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/New_Order_-_Power%2C_Corruption_%26_Lies.png/440px-New_Order_-_Power%2C_Corruption_%26_Lies.png")
+    add_release("Low-Life", "1985-05-13", 5, "https://upload.wikimedia.org/wikipedia/en/f/f6/New_Order_-_Low-Life.png")
+    add_release("Brotherhood", "1986-09-29", 5, "https://upload.wikimedia.org/wikipedia/en/a/aa/New_Order_-_Brotherhood.png")
+    add_release("Technique", "1989-01-30", 5, "https://upload.wikimedia.org/wikipedia/en/8/8a/New_Order_-_Technique.png")   
+    add_release("Republic", "1993-05-03", 5, "https://upload.wikimedia.org/wikipedia/en/0/0c/New_Order_Republic_Cover.jpg")
+    add_release("Get Ready", "2001-08-27", 5, "https://upload.wikimedia.org/wikipedia/en/9/93/Get-Ready-cover.png")
+    add_release("Waiting for the Sirens' Call", "2005-03-28", 5, "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/New_Order_-_Waiting_for_the_Sirens_Call.png/440px-New_Order_-_Waiting_for_the_Sirens_Call.png")
+    add_release("Lost Sirens", "2013-01-11", 5, "https://upload.wikimedia.org/wikipedia/en/9/9a/New_Order_-_Lost_Sirens.png")
+    add_release("Music Complete", "2015-09-25", 5, "https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/New_Order_-_Music_Complete.svg/440px-New_Order_-_Music_Complete.svg.png")
+    
+    
     add_list("Top 1988", "Mon top album 1988", True)
 
     add_list_release(4, 1, 5)
