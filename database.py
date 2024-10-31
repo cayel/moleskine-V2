@@ -153,3 +153,27 @@ def drop_database():
     
     connection.commit()
     connection.close()
+    
+def load_all_releases():
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("""
+        SELECT release.id, release.title, release.date, artist.name, release.image
+        FROM release
+        JOIN artist ON release.artist_id = artist.id
+    """)
+    
+    releases = []
+    
+    for row in cursor.fetchall():
+        release_id, release_title, release_date, artist_name, release_image = row
+        
+        artist = Artist(artist_name, None)
+        release = Release(artist, release_title, release_date, release_image)
+        
+        releases.append(release)
+    
+    connection.close()
+    
+    return releases

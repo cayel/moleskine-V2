@@ -46,3 +46,21 @@ def generate_table_html(list_releases, num_columns):
     table_html += '</table>'
     return table_html
 
+def generate_table_html_array(releases, num_columns):
+    table_html = '<table class="album-table">'
+    column_count = 0
+
+    for release in releases:
+        if column_count == 0:
+            table_html += '<tr>'
+        table_html += f"<td rowspan='1'><img src='{release.image}' title='{release.title}' style='width:150px; height:auto;'></td>"
+        column_count += 1
+        if column_count == num_columns:
+            table_html += '</tr>'
+            column_count = 0
+
+    if column_count != 0:
+        table_html += '</tr>'
+
+    table_html += '</table>'
+    return table_html
