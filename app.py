@@ -1,5 +1,7 @@
 import streamlit as st
-from database import create_database, populate_database, drop_database, load_lists, load_list_releases
+from database import create_database, drop_database, load_lists, load_list_releases
+from seed_database import seed_database
+
 from album_grid import generate_css, generate_table_html
 
 def main():
@@ -9,7 +11,7 @@ def main():
     # init database
     drop_database()
     create_database()
-    populate_database()
+    seed_database()
 
     # load lists
     lists = load_lists()
