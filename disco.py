@@ -1,34 +1,34 @@
 import streamlit as st  
-from database import load_lists, load_list_releases, load_all_releases
-from album_grid import generate_css, generate_table_html,generate_table_html_array
+from database import load_artists,load_releases_from_artists_and_years
+from album_grid import generate_css,generate_table_html_array
 
-st.title("Discothèque")
+st.title("Discographies")
 
-# load lists
-lists = load_lists()
+# Load all artists
+artists = load_artists()
 
-# select a list
-list_names = [l.name for l in lists]
-list_name = st.selectbox("Sélectionnez une liste", list_names)
+# Select artists
+selected_artists = st.multiselect("Artistes", options=artists, format_func=lambda artist: artist.name)
 
-# load list releases for the selected list
-list_releases = load_list_releases()
-list_releases = [l for l in list_releases if l.name == list_name][0]
+# Select years
+years = st.slider("Années", min_value=1950, max_value=2021, value=(1950, 2024))
 
-num_columns = 5
-color = "#000000"
+# Select sort order by date asc or desc
+sort_order = st.radio("Tri par date", ("Ascendant", "Descendant"))
 
-table_html = generate_table_html(list_releases, num_columns)
-css = generate_css(color)
-st.markdown(css, unsafe_allow_html=True)
-st.markdown(table_html, unsafe_allow_html=True)
+# Launch query if button is clicked
+if st.button("Rechercher"):
+    if selected_artists:
+        # Load all releases for the selected artists
+        releases = load_releases_from_artists_and_years(selected_artists, years, sort_order)
 
-# all_releases = load_all_releases()
+        # Generate the HTML table
+        num_columns = 5
+        color = "#000000"
+        table_html = generate_table_html_array(releases, num_columns)
+        css = generate_css(color)
+        st.markdown(css, unsafe_allow_html=True)
+        st.markdown(table_html, unsafe_allow_html=True)
 
-# num_columns = 5
-# color = "#000000"
 
-# table_html = generate_table_html_array(all_releases, num_columns)
-# css = generate_css(color)
-# st.markdown(css, unsafe_allow_html=True)
-# st.markdown(table_html, unsafe_allow_html=True)
+

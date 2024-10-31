@@ -177,3 +177,56 @@ def load_all_releases():
     connection.close()
     
     return releases
+
+def load_artists():
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT id, name FROM artist")
+    
+    artists = []
+    
+    for row in cursor.fetchall():
+        artist_id, artist_name = row
+        artists.append(Artist(artist_name, artist_id))
+    
+    connection.close()
+    
+    return artists
+
+def load_releases_from_artists(artists):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    releases = []
+    
+    for artist in artists:
+        cursor.execute("SELECT id, title, date, image FROM release WHERE artist_id = ?", (artist.id,))
+        
+        for row in cursor.fetchall():
+            release_id, release_title, release_date, release_image = row
+            release = Release(artist, release_title, release_date, release_image)
+            releases.append(release)
+    
+    connection.close()
+    
+    return releases
+
+def load_releases_from_artists_and_years(artists, years, sort_order):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    releases = []
+    
+    for artist in artists:
+        cursor.execute("SELECT id, title, date, image FROM release WHERE artist_id = ? AND date BETWEEN ? AND ? ORDER BY date", (artist.id, years[0], years[1]+1))
+        
+        for row in cursor.fetchall():
+            release_id, release_title, release_date, release_image = row
+            release = Release(artist, release_title, release_date, release_image)
+            releases.append(release)
+    
+    connection.close()
+    # Sort releases by date
+    releases.sort(key=lambda release: release.date, reverse=(sort_order == "Descendant"))
+    return releases

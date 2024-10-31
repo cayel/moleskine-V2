@@ -3,7 +3,8 @@ import streamlit as st
 def main():
     pages = {
         "Musique": [
-            st.Page("disco.py", title="Discothèque"),
+            #st.Page("select.py", title="Sélections"),
+            st.Page("disco.py", title="Discographies"),
         ],
         "Administration": [
             st.Page("admin.py", title="Base de données"),
