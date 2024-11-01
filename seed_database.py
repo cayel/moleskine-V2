@@ -6,6 +6,8 @@ def seed_database():
     add_artist("New Model Army")
     add_artist("The Gun Club")
     add_artist("New Order")
+    add_artist("The Cure")
+    add_artist("Silver Jews")
     
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
@@ -66,7 +68,28 @@ def seed_database():
     add_release("Lost Sirens", "2013-01-11", 5, "https://upload.wikimedia.org/wikipedia/en/9/9a/New_Order_-_Lost_Sirens.png")
     add_release("Music Complete", "2015-09-25", 5, "https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/New_Order_-_Music_Complete.svg/440px-New_Order_-_Music_Complete.svg.png")
     
-    
+    add_release("Three Imaginary Boys", "1979-05-11", 6, "https://upload.wikimedia.org/wikipedia/en/1/18/TheCureThreeImaginaryBoysalbumcover.jpg")
+    add_release("Seventeen Seconds", "1980-04-22", 6, "https://upload.wikimedia.org/wikipedia/en/a/a5/Seventeen_Seconds.jpg")
+    add_release("Faith", "1981-04-14", 6, "https://upload.wikimedia.org/wikipedia/en/d/d0/The_Cure_-_Faith.jpg")
+    add_release("Pornography", "1982-05-04", 6, "https://upload.wikimedia.org/wikipedia/en/0/07/The_Cure_-_Pornography.jpg")
+    add_release("The Top", "1984-05-04", 6, "https://upload.wikimedia.org/wikipedia/en/d/d9/The_Cure_-_The_Top.jpg")
+    add_release("The Head on the Door", "1985-08-30", 6, "https://upload.wikimedia.org/wikipedia/en/6/64/The_Cure_-_The_Head_on_the_Door.jpg")
+    add_release("Kiss Me, Kiss Me, Kiss Me", "1987-05-26", 6, "https://upload.wikimedia.org/wikipedia/en/f/f5/The_Cure_-_Kiss_Me%2C_Kiss_Me%2C_Kiss_Me.jpg")
+    add_release("Disintegration", "1989-05-02", 6, "https://upload.wikimedia.org/wikipedia/en/b/b8/CureDisintegration.jpg")
+    add_release("Wish", "1992-04-21", 6, "https://upload.wikimedia.org/wikipedia/en/2/2b/TheCureWish.jpg")
+    add_release("Wild Mood Swings", "1996-05-06", 6, "https://upload.wikimedia.org/wikipedia/en/8/8b/The_Cure_-_Wild_Mood_Swings.jpg")
+    add_release("Bloodflowers", "2000-02-02", 6, "https://upload.wikimedia.org/wikipedia/en/6/68/The_Cure_-_Bloodflowers.jpg")
+    add_release("The Cure", "2004-06-25", 6, "https://upload.wikimedia.org/wikipedia/en/7/73/The_Cure_album_cover.jpg")
+    add_release("4:13 Dream", "2008-10-27", 6, "https://upload.wikimedia.org/wikipedia/en/e/e9/4.13_Dream_Cover.jpg")
+    add_release("Songs of a Lost World", "2024-11-01", 6, "https://upload.wikimedia.org/wikipedia/en/c/c6/Songs_of_a_Lost_World_the_Cure.jpg")
+
+    add_release("Starlite Walker", "1994-10-24", 7, "https://upload.wikimedia.org/wikipedia/en/d/d2/Starlite.jpg")
+    add_release("The Natural Bridge", "1996-10-01", 7, "https://upload.wikimedia.org/wikipedia/en/7/70/The_Natural_Bridge_%28Silver_Jews_album%29_coverart.jpg")
+    add_release("American Water", "1998-10-20", 7, "https://upload.wikimedia.org/wikipedia/en/d/d1/American_water.jpg")
+    add_release("Bright Flight", "2001-11-20", 7, "https://upload.wikimedia.org/wikipedia/en/3/39/Brightflight.jpg")
+    add_release("Tanglewood Numbers", "2005-10-18", 7, "https://upload.wikimedia.org/wikipedia/en/e/ef/Tanglewoodnumbers.jpg")
+    add_release("Lookout Mountain, Lookout Sea", "2008-06-17", 7, "https://upload.wikimedia.org/wikipedia/en/6/6f/Album_cover_silver_jews.jpg")
+
     add_list("Top 1988", "Mon top album 1988", True)
 
     add_list_release(4, 1, 5)
