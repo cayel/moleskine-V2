@@ -15,6 +15,7 @@ def seed_database():
     add_artist("Swans")
     add_artist("Front 242")
     add_artist("Idles")
+    add_artist("And Also The Trees")
                
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")

@@ -23,6 +23,7 @@ def create_release_table(cursor):
             date TEXT NOT NULL,
             artist_id INTEGER NOT NULL,
             image TEXT,
+            mbid TEXT,
             FOREIGN KEY(artist_id) REFERENCES artist(id)
         )
     """)
@@ -70,14 +71,23 @@ def add_artist(artist_name):
     connection.commit()
     connection.close()
 
-def add_release(release_title, release_date, artist_id, release_image=None):
-    connection = sqlite3.connect(DATABASE_NAME)
-    cursor = connection.cursor()
-    
-    cursor.execute("INSERT INTO release(title, date, artist_id, image) VALUES (?, ?, ?, ?)", (release_title, release_date, artist_id, release_image))
-    
-    connection.commit()
-    connection.close()
+def add_release(release_title, release_date, artist_id, release_image=None, release_mbid=None):
+    try:
+        connection = sqlite3.connect(DATABASE_NAME)
+        cursor = connection.cursor()
+        
+        cursor.execute(
+            "INSERT INTO release(title, date, artist_id, image, mbid) VALUES (?, ?, ?, ?, ?)",
+            (release_title, release_date, artist_id, release_image, release_mbid)
+        )
+        
+        connection.commit()
+        return True, "Release added successfully"
+    except sqlite3.Error as e:
+        return False, f"An error occurred: {e}"
+    finally:
+        if connection:
+            connection.close()
 
 def add_list(list_name, list_description, is_private):
     connection = sqlite3.connect(DATABASE_NAME)
@@ -230,3 +240,17 @@ def load_releases_from_artists_and_years(artists, years, sort_order):
     # Sort releases by date
     releases.sort(key=lambda release: release.date, reverse=(sort_order == "Descendant"))
     return releases
+
+def get_id_artist(artist_name):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT id FROM artist WHERE name = ?", (artist_name,))
+    result = cursor.fetchone()
+    
+    connection.close()
+    
+    if result is None:
+        return -1
+    else:
+        return result[0]
