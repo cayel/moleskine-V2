@@ -9,6 +9,8 @@ def seed_database():
     add_artist("The Cure")
     add_artist("Silver Jews")
     add_artist("Joy Division")
+    add_artist("The Sisters of Mercy")
+    add_artist("The Chameleons")
     
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
@@ -104,6 +106,16 @@ def seed_database():
     add_release("Unknown Pleasures", "1979-06-15", 8, "https://upload.wikimedia.org/wikipedia/en/5/5a/UnknownPleasuresVinyl.jpg")
     add_release("Closer", "1980-07-18", 8, "https://upload.wikimedia.org/wikipedia/en/6/64/Joy_Division_Closer.jpg")
 
+    add_release("First and Last and Always", "1985-03-11", 9, "https://upload.wikimedia.org/wikipedia/en/a/ae/The_Sisters_of_Mercy_-_First_and_Last_and_Always_cover.jpg")
+    add_release("Floodland", "1987-11-16", 9, "https://upload.wikimedia.org/wikipedia/en/3/31/The_Sisters_of_Mercy_-_Floodland_cover_art.png")
+    add_release("Vision Thing", "1990-10-22", 9, "https://upload.wikimedia.org/wikipedia/en/c/ce/The_Sisters_of_Mercy_-_Vision_Thing_cover.jpg")
+
+    add_release("Script of the Bridge", "1983-08-08", 10, "https://upload.wikimedia.org/wikipedia/en/0/04/Scriptofthebridge.jpg")
+    add_release("What Does Anything Mean? Basically", "1985-05-20", 10, "https://upload.wikimedia.org/wikipedia/en/1/12/Whatdoesanythingmean.jpg")
+    add_release("Strange Times", "1986-09-01", 10, "https://upload.wikimedia.org/wikipedia/en/4/4e/Strange_Times.jpg")
+    add_release("Why Call It Anything", "2001-07-01", 10, "https://upload.wikimedia.org/wikipedia/en/0/03/Whycallitanything.jpg")
+    add_release("Sing", "2001-07-01", 10, "https://upload.wikimedia.org/wikipedia/en/3/3e/Singchameleons.jpg")
+    
     add_list("Top 1988", "Mon top album 1988", True)
 
     add_list_release(4, 1, 5)
