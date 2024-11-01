@@ -8,6 +8,7 @@ def seed_database():
     add_artist("New Order")
     add_artist("The Cure")
     add_artist("Silver Jews")
+    add_artist("Joy Division")
     
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
@@ -28,9 +29,19 @@ def seed_database():
     add_release("Ghosteen", "2019-10-04",1, "https://upload.wikimedia.org/wikipedia/en/4/45/Ghosteen_-_Nick_Cave_and_the_Bad_Seeds.jpg")
     add_release("Wild God", "2024-08-30",1, "https://upload.wikimedia.org/wikipedia/en/7/7f/Nick_Cave_and_the_Bad_Seeds_-_Wild_God.png")
 
-    add_release("Kollaps", "1981-10-05", 2, "https://www.fromthearchives.org/en/ENKollaps_LP_f.jpg")
-    add_release("Zeichnungen des Patienten O. T.", "1983-11-21", 2, "https://www.fromthearchives.org/en/ENZeichnungen_LP_f.jpg")   
-    add_release("80-83 Strategies Against Architecture", "1984-01-23", 2, "https://www.fromthearchives.org/en/ENStrat1CD_f.jpg")
+    add_release("Kollaps", "1981-10-05", 2, "https://upload.wikimedia.org/wikipedia/en/f/f9/Kollaps_cover_art.png")
+    add_release("Zeichnungen des Patienten O. T.", "1983-11-21", 2, "https://upload.wikimedia.org/wikipedia/en/0/09/ZeichnungenDesPatientenOTAlbumCover.jpg")   
+    add_release("Halber Mensch", "1985-09-02", 2, "https://upload.wikimedia.org/wikipedia/en/b/bc/HalberMenschAlbumCover.jpg")
+    add_release("Fünf auf der nach oben offenen Richterskala", "1987-06-01", 2, "https://upload.wikimedia.org/wikipedia/en/3/30/Richterskala_album.jpg")
+    add_release("Haus der Lüge", "1989-09-04", 2, "https://upload.wikimedia.org/wikipedia/en/e/e7/ENHaus_front.jpg")
+    add_release("Tabula Rasa", "1993-03-01", 2, "https://upload.wikimedia.org/wikipedia/en/4/4f/ENTabula_front.jpg")
+    add_release("Ende Neu", "1996-07-23", 2, "https://upload.wikimedia.org/wikipedia/en/9/9f/Ende_Neu_%28Einst%C3%BCrzende_Neubauten_album_-_cover_art%29.jpg")
+    add_release("Silence Is Sexy", "2000-05-23", 2, "https://upload.wikimedia.org/wikipedia/en/1/10/EN-SiS.jpg")
+    add_release("Perpetuum Mobile", "2004-02-10", 2, "https://upload.wikimedia.org/wikipedia/en/8/85/Perpetuum_mobile_cover.jpg")
+    add_release("Alles Wieder offen", "2007-10-19", 2, "https://upload.wikimedia.org/wikipedia/en/a/ac/Alles_Wieder_Offen.jpg")
+    add_release("Lament", "2014-11-07", 2, "https://upload.wikimedia.org/wikipedia/en/8/83/Lament_Einst%C3%BCrzende_Neubauten.png")
+    add_release("Alles in Allem", "2020-05-15", 2, "https://upload.wikimedia.org/wikipedia/en/6/61/Alles_in_Allem.jpg")
+    add_release("Rampen - APM: Alien Pop Music", "2024-04-05", 2, "https://i.discogs.com/taGVwhSX7xkWR-qa5wJ7hLsddoVQ1P9U2P1J0RXitWQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwMjUw/OTg4LTE3MTI1MDQ5/NTktNjc5Ni5qcGVn.jpeg")
 
     add_release("Vengeance", "1984-04-04", 3, "https://upload.wikimedia.org/wikipedia/en/9/91/NMA_vengeance.jpg")
     add_release("No Rest for the Wicked", "1985-01-01", 3, "https://upload.wikimedia.org/wikipedia/en/thumb/9/92/NMA_no_rest.jpg/220px-NMA_no_rest.jpg")
@@ -89,6 +100,9 @@ def seed_database():
     add_release("Bright Flight", "2001-11-20", 7, "https://upload.wikimedia.org/wikipedia/en/3/39/Brightflight.jpg")
     add_release("Tanglewood Numbers", "2005-10-18", 7, "https://upload.wikimedia.org/wikipedia/en/e/ef/Tanglewoodnumbers.jpg")
     add_release("Lookout Mountain, Lookout Sea", "2008-06-17", 7, "https://upload.wikimedia.org/wikipedia/en/6/6f/Album_cover_silver_jews.jpg")
+
+    add_release("Unknown Pleasures", "1979-06-15", 8, "https://upload.wikimedia.org/wikipedia/en/5/5a/UnknownPleasuresVinyl.jpg")
+    add_release("Closer", "1980-07-18", 8, "https://upload.wikimedia.org/wikipedia/en/6/64/Joy_Division_Closer.jpg")
 
     add_list("Top 1988", "Mon top album 1988", True)
 
