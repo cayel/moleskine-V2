@@ -1,6 +1,5 @@
 import streamlit as st  
 from database import create_database, drop_database, get_id_artist, add_release
-
 from seed_database import seed_database
 import requests
 
@@ -21,7 +20,7 @@ def get_album_info_musicbrainz(mbid):
     response = requests.get(url)
     return response.json()
 
-# Réinitialiser l'état de la session pour l'album
+# Initialiser l'état de la session pour les albums
 if 'albums' not in st.session_state:
     st.session_state['albums'] = []
 if 'selected_album' not in st.session_state:
@@ -30,20 +29,21 @@ if 'selected_album' not in st.session_state:
 st.title("Administration")
 st.write("Bienvenue dans l'administration de Moleskine !")
 
+# Bouton pour réinitialiser la base de données
 if st.button("Réinitialiser la base de données"):
     drop_database()
     create_database()
     seed_database()
 
-# Add form to add a release
+# Formulaire pour ajouter un album
 st.write("Ajouter un album")
 release_title = st.text_input("Titre de l'album")
 release_artist = st.text_input("Artiste de l'album")
 
-# add button to search the album on lastfm
+# Bouton pour rechercher l'album sur Last.fm
 if st.button("Rechercher l'album"):
     if release_artist and release_title:
-        # Réinitialiser le contexte
+        # Réinitialiser le contexte de recherche
         st.session_state['albums'] = []
         st.session_state['selected_album'] = None
         limit_search = 20
@@ -57,8 +57,8 @@ if st.button("Rechercher l'album"):
     else:
         st.write("Veuillez entrer le titre et l'artiste de l'album.")
 
-# Afficher les albums si disponibles
-if 'albums' in st.session_state and st.session_state['albums']:
+# Afficher les albums trouvés
+if st.session_state['albums']:
     albums = st.session_state['albums']
     cols = st.columns(5)
     
@@ -66,13 +66,13 @@ if 'albums' in st.session_state and st.session_state['albums']:
         album_image = album['image'][2]['#text']
         album_title = album['name']
         album_mbid = album['mbid']
-        if album_image and album_mbid:  # Vérifie si l'image et le mbid ne sont pas vides
+        if album_image and album_mbid:
             with cols[i % 5]:
                 st.image(album_image, width=100)
                 if st.button("Choisir", key=f"choose_{i}"):
                     st.session_state['selected_album'] = i
 
-# Afficher le message de sélection
+# Afficher les détails de l'album sélectionné
 if st.session_state['selected_album'] is not None:
     selected_album = st.session_state['selected_album']
     if selected_album < len(st.session_state['albums']):
@@ -84,8 +84,9 @@ if st.session_state['selected_album'] is not None:
 
         album_info = get_album_info_musicbrainz(album_mbid)
         album_date = album_info.get('date', 'Date non disponible')
-        st.write(f"### Vous avez sélectionné l'album n°{selected_album+1}")
+        st.write(f"### Vous avez sélectionné l'album n°{selected_album + 1}")
         st.image(album_image, caption=album_title, width=200)
+        
         with st.form(key='album_form'):
             new_album_title = st.text_input("Titre de l'album", value=album_title)
             id_artist = get_id_artist(album_artist)
@@ -98,7 +99,7 @@ if st.session_state['selected_album'] is not None:
             submit_button = st.form_submit_button(label='Enregistrer les modifications', disabled=(id_artist == -1))
 
         if submit_button:
-            if add_release(new_album_title, new_album_date, id_artist, new_album_image, new_album_mbid ):
+            if add_release(new_album_title, new_album_date, id_artist, new_album_image, new_album_mbid):
                 st.write("L'album a été ajouté avec succès.")
             else:
                 st.write("Une erreur est survenue lors de l'ajout de l'album.")
