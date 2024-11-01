@@ -11,7 +11,11 @@ def seed_database():
     add_artist("Joy Division")
     add_artist("The Sisters of Mercy")
     add_artist("The Chameleons")
-    
+    add_artist("Fontaines D.C.")
+    add_artist("Swans")
+    add_artist("Front 242")
+    add_artist("Idles")
+               
     add_release("From Her To Eternity", "1984-06-01", 1, "https://upload.wikimedia.org/wikipedia/en/3/38/Fromhertoeternity.jpg")
     add_release("The Firstborn Is Dead", "1985-06-03", 1, "https://upload.wikimedia.org/wikipedia/en/6/6b/The_Firstborn_Is_Dead.png")
     add_release("Kicking Against The Pricks", "1986-08-18", 1, "https://upload.wikimedia.org/wikipedia/en/e/e5/Kickingagainstthepricks.jpeg")
@@ -115,7 +119,44 @@ def seed_database():
     add_release("Strange Times", "1986-09-01", 10, "https://upload.wikimedia.org/wikipedia/en/4/4e/Strange_Times.jpg")
     add_release("Why Call It Anything", "2001-07-01", 10, "https://upload.wikimedia.org/wikipedia/en/0/03/Whycallitanything.jpg")
     add_release("Sing", "2001-07-01", 10, "https://upload.wikimedia.org/wikipedia/en/3/3e/Singchameleons.jpg")
-    
+
+    add_release("Dogrel", "2019-04-12", 11, "https://upload.wikimedia.org/wikipedia/en/9/9d/Dogrel_album_cover.png")
+    add_release("A Hero's Death", "2020-07-31", 11, "https://upload.wikimedia.org/wikipedia/en/9/9b/A_Hero%27s_Death_Fontaines_DC.jpg")
+    add_release("Skinty Fia", "2022-04-22", 11, "https://upload.wikimedia.org/wikipedia/en/d/df/Fontaines_D.C._-_Skinty_Fia.png")
+    add_release("Romance", "2024-08-23", 11, "https://upload.wikimedia.org/wikipedia/en/3/31/Romance_Fontaines_D.C._album_cover.jpg")
+
+    add_release("Filth", "1983-05-27", 12, "https://upload.wikimedia.org/wikipedia/en/b/b3/SwansFilth.jpg")
+    add_release("Cop", "1984-10-01", 12, "https://upload.wikimedia.org/wikipedia/en/c/cd/Swans_-_Cop.jpg")
+    add_release("Greed", "1986-02-28", 12, "https://upload.wikimedia.org/wikipedia/en/8/84/Greed_%281986%29_cover.jpg")
+    add_release("Holy Money", "1986-03-27", 12, "https://upload.wikimedia.org/wikipedia/en/0/0f/Holy_Money_%281986%29_cover.jpg")
+    add_release("Children of God", "1987-10-19", 12, "https://upload.wikimedia.org/wikipedia/en/f/fb/Childrenofgod.jpg")
+    add_release("The Burning World", "1989-02-14", 12, "https://upload.wikimedia.org/wikipedia/en/8/8f/Swansburningworld.jpg")
+    add_release("White Light from the Mouth of Infinity", "1991-09-17", 12, "https://upload.wikimedia.org/wikipedia/en/1/11/Swans_whitelightfromthemouthofinfinity.jpg")
+    add_release("Love of Life", "1992-05-28", 12, "https://upload.wikimedia.org/wikipedia/en/8/84/Swansloveoflife.jpg")
+    add_release("The Great Annihilator", "1995-01-23", 12, "https://upload.wikimedia.org/wikipedia/en/6/68/Swans_-_Great_Annihilator.jpg")
+    add_release("Soundtracks for the Blind", "1996-10-22", 12, "https://upload.wikimedia.org/wikipedia/commons/a/ad/Soundtracks_for_the_Blind.jpg")
+    add_release("My Father Will Guide Me Up a Rope to the Sky", "2010-09-23", 12, "https://upload.wikimedia.org/wikipedia/en/f/f9/Swans_My_Father_Will_Guide_Me_up_a_Rope_to_the_Sky_album.jpg")
+    add_release("The Seer", "2012-08-28", 12, "https://upload.wikimedia.org/wikipedia/en/a/a7/Swans_The_Seer_album.jpg")
+    add_release("To Be Kind", "2014-05-12", 12, "https://upload.wikimedia.org/wikipedia/en/8/85/Swans_To_Be_Kind.jpg")
+    add_release("The Glowing Man", "2016-06-17", 12, "https://upload.wikimedia.org/wikipedia/en/c/ca/The_Glowing_Man_%28Front_Cover%29.jpg")
+    add_release("Leaving Meaning", "2019-10-25", 12, "https://upload.wikimedia.org/wikipedia/en/8/82/Leaving_Meaning_%28Front_Cover%29.jpg")
+    add_release("The Beggar", "2023-06-23", 12, "https://upload.wikimedia.org/wikipedia/en/d/d5/The_Beggar_%282023%29_cover.jpg")
+
+    add_release("Geography", "1982-09-01", 13, "https://upload.wikimedia.org/wikipedia/en/3/3b/Front242.Geography.Original.Cover.jpeg")
+    add_release("No Comment", "1984-09-01", 13, "https://upload.wikimedia.org/wikipedia/en/c/c3/Front242_No_Comment_1984.jpg")
+    add_release("Official Version", "1987-03-01", 13, "https://upload.wikimedia.org/wikipedia/en/2/21/Front242.Official.Version.Original.jpeg")
+    add_release("Front by Front", "1988-11-01", 13, "https://upload.wikimedia.org/wikipedia/en/5/50/Front242.Front.By.Front.Original.gif")
+    add_release("Tyranny >For You<", "1991-01-24", 13, "https://upload.wikimedia.org/wikipedia/en/0/08/Front242-TyrannyForYouAlbumCover.jpg")
+    add_release("06:21:03:11 Up Evil", "1993-05-25", 13, "https://upload.wikimedia.org/wikipedia/en/e/e9/06210311_Up_Evil.jpg")
+    add_release("05:22:09:12 Off", "1993-11-02", 13, "https://upload.wikimedia.org/wikipedia/en/9/9e/Front_242_-OFF.jpg")
+    add_release("Pulse", "2003-05-06", 13, "https://upload.wikimedia.org/wikipedia/en/d/d8/Pulse_%282003%29.jpg")
+
+    add_release("Brutalism", "2017-03-10", 14, "https://upload.wikimedia.org/wikipedia/en/3/3c/Idles-Brutalism.jpg")
+    add_release("Joy as an Act of Resistance", "2018-08-31", 14, "https://upload.wikimedia.org/wikipedia/en/e/e4/Idles-Joy_as_an_Act_of_Resistance.jpg")
+    add_release("Ultra Mono", "2020-09-25", 14, "https://upload.wikimedia.org/wikipedia/en/3/3c/Idles_Ultra_Mono_artwork.jpg")
+    add_release("Crawler", "2021-11-12", 14, "https://upload.wikimedia.org/wikipedia/en/e/e8/Crawler_Idles.jpg")
+    add_release("Tangk","2024-02-26",14,"https://upload.wikimedia.org/wikipedia/en/8/89/Idles_-_Tangk.png")
+
     add_list("Top 1988", "Mon top album 1988", True)
 
     add_list_release(4, 1, 5)
