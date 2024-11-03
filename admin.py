@@ -2,106 +2,99 @@ import streamlit as st
 from database import create_database, drop_database, get_id_artist, add_release
 from seed_database import seed_database
 import requests
+import json
+from database import get_all_artists, get_all_releases, add_artist, add_release
 
-API_KEY = 'cac21970e3572d81c5a8aef87526959b'  
+FILE_EXPORT = "./data/moleskine_backup.json"
+FILE_EXPORT_GZ = "./data/moleskine_backup.json.gz"
 
-def search_album(title, artist):
-    url = f"http://ws.audioscrobbler.com/2.0/?method=album.search&album={title}&artist={artist}&api_key={API_KEY}&format=json"
-    response = requests.get(url)
-    return response.json()
+import json
+import gzip
+import os
+import streamlit as st
+from database import get_all_artists, get_all_releases
 
-def get_album_info(mbid):
-    url = f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&mbid={mbid}&api_key={API_KEY}&format=json"
-    response = requests.get(url)
-    return response.json()
+class ExportDatabaseError(Exception):
+    """Exception levée pour les erreurs d'exportation de la base de données."""
+    pass
 
-def get_album_info_musicbrainz(mbid):
-    url = f"https://musicbrainz.org/ws/2/release/{mbid}?inc=artist-credits+labels+discids+recordings&fmt=json"
-    response = requests.get(url)
-    return response.json()
+def export_database():
+    try:
+        # Récupération des artistes et des albums
+        artists = get_all_artists()
+        releases = get_all_releases()
 
-# Initialiser l'état de la session pour les albums
-if 'albums' not in st.session_state:
-    st.session_state['albums'] = []
-if 'selected_album' not in st.session_state:
-    st.session_state['selected_album'] = None
+        data = {
+            "artists": artists,
+            "albums": releases
+        }
 
-st.title("Administration")
-st.write("Bienvenue dans l'administration de Moleskine !")
+        # Écriture des données dans un fichier JSON
+        with open(FILE_EXPORT, "w") as f:
+            json.dump(data, f, indent=4)
+
+        # Compression du fichier JSON
+        with open(FILE_EXPORT, "rb") as f:
+            data = f.read()
+        with open(FILE_EXPORT_GZ, "wb") as f:
+            f.write(gzip.compress(data))
+
+        # Suppression du fichier JSON non compressé
+        os.remove(FILE_EXPORT)
+
+        return True
+    except Exception as e:
+        raise ExportDatabaseError(f"Une erreur est survenue lors de l'exportation de la base de données : {e}")
+
+st.header("Administration de la base de données", divider="blue")
+
+# Export de la base de données
+with st.expander("Export de la base de données", icon="📤"):
+    if st.button("Exporter la base de données"):
+        try:
+            if export_database():
+                st.success("La base de données a été exportée et compressée avec succès.")
+        except ExportDatabaseError as e:
+            st.error(e)
+
+        # Lire le fichier pour le téléchargement
+        with open(FILE_EXPORT_GZ, "rb") as f:
+            export_data = f.read()
+
+        # Ajouter un bouton de téléchargement
+        st.download_button(
+            label="Télécharger le fichier exporté",
+            data=export_data,
+            file_name="moleskine_backup.json.gz",
+            mime="application/gzip"
+        )
+
+# Restaurer la base de données
+with st.expander("Restaurer la base de données", icon="📥"):
+    uploaded_file = st.file_uploader("Choisir un fichier gzip", type=["gz"])
+    if uploaded_file is not None:
+        if st.button("Restaurer la base de données"):
+            try:
+                drop_database()
+                create_database()
+                with open(FILE_EXPORT_GZ, "wb") as f:
+                    f.write(uploaded_file.read())
+                with gzip.open(FILE_EXPORT_GZ, "rb") as f:
+                    data = json.load(f)
+                    for artist in data["artists"]:
+                        add_artist(artist[1], artist[0])
+                    for album in data["albums"]:
+                        add_release(album[1], album[2], album[3], album[4], album[5], album[0])
+                st.success("La base de données a été restaurée avec succès.")
+            except Exception as e:
+                st.error(f"Une erreur est survenue lors de la restauration de la base de données : {e}")
+    else:
+        st.warning("Veuillez choisir un fichier gzip.")
 
 # Bouton pour réinitialiser la base de données
-if st.button("Réinitialiser la base de données"):
-    drop_database()
-    create_database()
-    seed_database()
+with st.expander("Réinitialiser la base de données",icon="🔄"):
+    if st.button("Réinitialiser la base de données"):
+        drop_database()
+        create_database()
+        seed_database()
 
-# Formulaire pour ajouter un album
-st.write("Ajouter un album")
-release_title = st.text_input("Titre de l'album")
-release_artist = st.text_input("Artiste de l'album")
-
-# Bouton pour rechercher l'album sur Last.fm
-if st.button("Rechercher l'album"):
-    if release_artist and release_title:
-        # Réinitialiser le contexte de recherche
-        st.session_state['albums'] = []
-        st.session_state['selected_album'] = None
-        limit_search = 20
-        result = search_album(release_title, release_artist)
-        st.session_state['albums'] = [
-            album for album in result['results']['albummatches']['album']
-            if album['mbid'] and album['image'][2]['#text']][:limit_search]
-
-        if not st.session_state['albums']:
-            st.write("Aucun album trouvé.")
-    else:
-        st.write("Veuillez entrer le titre et l'artiste de l'album.")
-
-# Afficher les albums trouvés
-if st.session_state['albums']:
-    albums = st.session_state['albums']
-    cols = st.columns(5)
-    
-    for i, album in enumerate(albums):
-        album_image = album['image'][2]['#text']
-        album_title = album['name']
-        album_mbid = album['mbid']
-        if album_image and album_mbid:
-            with cols[i % 5]:
-                st.image(album_image, width=100)
-                if st.button("Choisir", key=f"choose_{i}"):
-                    st.session_state['selected_album'] = i
-
-# Afficher les détails de l'album sélectionné
-if st.session_state['selected_album'] is not None:
-    selected_album = st.session_state['selected_album']
-    if selected_album < len(st.session_state['albums']):
-        album = st.session_state['albums'][selected_album]
-        album_image = album['image'][2]['#text'] 
-        album_title = album['name']
-        album_artist = album['artist']
-        album_mbid = album['mbid']
-
-        album_info = get_album_info_musicbrainz(album_mbid)
-        album_date = album_info.get('date', 'Date non disponible')
-        st.write(f"### Vous avez sélectionné l'album n°{selected_album + 1}")
-        st.image(album_image, caption=album_title, width=200)
-        
-        with st.form(key='album_form'):
-            new_album_title = st.text_input("Titre de l'album", value=album_title)
-            id_artist = get_id_artist(album_artist)
-            new_album_artist = st.text_input("Artiste", value=album_artist)
-            if id_artist == -1:
-                st.warning("L'artiste n'existe pas dans la base de données.")
-            new_album_mbid = st.text_input("MBID", value=album_mbid)
-            new_album_date = st.text_input("Date de sortie", value=album_date)
-            new_album_image = st.text_input("Image", value=album_image)
-            submit_button = st.form_submit_button(label='Enregistrer les modifications', disabled=(id_artist == -1))
-
-        if submit_button:
-            if add_release(new_album_title, new_album_date, id_artist, new_album_image, new_album_mbid):
-                st.write("L'album a été ajouté avec succès.")
-            else:
-                st.write("Une erreur est survenue lors de l'ajout de l'album.")
-    else:
-        st.write("L'album sélectionné n'existe pas.")
