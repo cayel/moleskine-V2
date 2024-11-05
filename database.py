@@ -63,16 +63,23 @@ def create_database():
     connection.close()
 
 def add_artist(artist_name, id=None):
-    connection = sqlite3.connect(DATABASE_NAME)
-    cursor = connection.cursor()
-    
-    if id:
-        cursor.execute("INSERT INTO artist(id, name) VALUES (?, ?)", (id, artist_name))
-    else:
-        cursor.execute("INSERT INTO artist(name) VALUES (?)", (artist_name,))
-    
-    connection.commit()
-    connection.close()
+    try:
+        connection = sqlite3.connect(DATABASE_NAME)
+        cursor = connection.cursor()
+        
+        if id:
+            cursor.execute("INSERT INTO artist(id, name) VALUES (?, ?)", (id, artist_name))
+        else:
+            cursor.execute("INSERT INTO artist(name) VALUES (?)", (artist_name,))
+        
+        connection.commit()
+        return True
+    except sqlite3.Error as e:
+        print(f"Une erreur est survenue lors de l'ajout de l'artiste : {e}")
+        return False
+    finally:
+        if connection:
+            connection.close()
 
 def add_release(release_title, release_date, artist_id, release_image=None, release_mbid=None, release_id=None):
     try:

@@ -9,6 +9,7 @@ def main():
         "Administration": [
             st.Page("admin.py", title="Base de données", icon="🔒"),
             st.Page("admin_releases.py", title="Releases", icon="🔒"),
+            st.Page("admin_artists.py", title="Artistes", icon="🔒")
         ]
     }
 
