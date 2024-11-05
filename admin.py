@@ -71,20 +71,26 @@ with st.expander("Export de la base de données", icon="📤"):
 
 # Restaurer la base de données
 with st.expander("Restaurer la base de données", icon="📥"):
-    uploaded_file = st.file_uploader("Choisir un fichier gzip", type=["gz"])
+    uploaded_file = st.file_uploader("Choisir un fichier gzip", type=["gz","json"])
     if uploaded_file is not None:
         if st.button("Restaurer la base de données"):
             try:
                 drop_database()
                 create_database()
-                with open(FILE_EXPORT_GZ, "wb") as f:
-                    f.write(uploaded_file.read())
-                with gzip.open(FILE_EXPORT_GZ, "rb") as f:
-                    data = json.load(f)
-                    for artist in data["artists"]:
-                        add_artist(artist[1], artist[0])
-                    for album in data["albums"]:
-                        add_release(album[1], album[2], album[3], album[4], album[5], album[0])
+                if uploaded_file.type == "application/json":
+                    with open(FILE_EXPORT, "wb") as f:
+                        f.write(uploaded_file.read())
+                    with open(FILE_EXPORT, "r") as f:
+                        data = json.load(f)
+                else:
+                    with open(FILE_EXPORT_GZ, "wb") as f:
+                        f.write(uploaded_file.read())
+                    with gzip.open(FILE_EXPORT_GZ, "rb") as f:
+                        data = json.load(f)                        
+                for artist in data["artists"]:
+                    add_artist(artist[1], artist[0])
+                for album in data["albums"]:
+                    add_release(album[1], album[2], album[3], album[4], album[5], album[0])
                 st.success("La base de données a été restaurée avec succès.")
             except Exception as e:
                 st.error(f"Une erreur est survenue lors de la restauration de la base de données : {e}")
