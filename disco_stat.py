@@ -9,10 +9,9 @@ st.title("Statistiques")
 
 df = charger_releases()
 
-# Add a widget to show the total number of albums
-st.write("Nombre total d'albums:", len(df))
-# Add a widget to show the total number of artists
-st.write("Nombre total d'artistes:", len(df['name'].unique()))
+col1, col2 = st.columns(2)
+col1.metric("Albums", len(df))
+col2.metric("Artistes", len(df['name'].unique()))
 
 st.subheader("Nombre d'albums par artiste")
 # Group the data by artist
