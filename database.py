@@ -3,6 +3,7 @@ import sqlite3
 from artist import Artist
 from release import Release
 from release_list import ReleaseList
+import pandas as pd
 
 DATA_DIR = "data"
 DATABASE_NAME = os.path.join(DATA_DIR, "moleskine.db")
@@ -292,3 +293,23 @@ def get_all_releases():
     connection.close()
     
     return result
+
+def charger_releases():
+    # Établir une connexion à la base de données
+    connection = sqlite3.connect(DATABASE_NAME)
+    
+    # Exécuter une requête SQL
+    query = """
+        SELECT release.id, release.title, release.date, artist.name, release.image
+        FROM release
+        JOIN artist ON release.artist_id = artist.id
+    """
+    
+    
+    # Charger les résultats dans un DataFrame Pandas
+    df = pd.read_sql_query(query, connection)
+    
+    # Fermer la connexion à la base de données
+    connection.close()
+    
+    return df

@@ -5,6 +5,7 @@ def main():
         "Musique": [
             #st.Page("select.py", title="Sélections"),
             st.Page("disco.py", title="Discographies", icon="🎵"),
+            st.Page("disco_stat.py", title="Statistiques", icon="📊"),
         ],
         "Administration": [
             st.Page("admin.py", title="Base de données", icon="🔒"),
