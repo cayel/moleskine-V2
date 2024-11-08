@@ -1,14 +1,21 @@
 import streamlit as st  
 from database import load_artists,load_releases_from_artists_and_years
 from album_grid import generate_css,generate_table_html_array
+from artist import Artist
 
 st.title("Discographies")
 
 # Load all artists
 artists = load_artists()
 
-# Select artists
-selected_artists = st.multiselect("Artistes", options=artists, format_func=lambda artist: artist.name)
+all_artists = st.toggle("Tous les artistes")
+
+if not all_artists:    
+    # Select artists
+    selected_artists = st.multiselect("Artistes", options=artists, format_func=lambda artist: artist.name,placeholder="Sélectionnez un ou plusieurs artistes")
+else:
+    selected_artists = artists
+
 
 # Select years
 years = st.slider("Années", min_value=1950, max_value=2021, value=(1950, 2024))
