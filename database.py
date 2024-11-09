@@ -12,7 +12,8 @@ def create_artist_table(cursor):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS artist (
             id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL
+            name TEXT NOT NULL,
+            country TEXT
         )
     """)
 
@@ -63,15 +64,15 @@ def create_database():
     connection.commit()
     connection.close()
 
-def add_artist(artist_name, id=None):
+def add_artist(artist_name, id=None, country=None):
     try:
         connection = sqlite3.connect(DATABASE_NAME)
         cursor = connection.cursor()
         
         if id:
-            cursor.execute("INSERT INTO artist(id, name) VALUES (?, ?)", (id, artist_name))
+            cursor.execute("INSERT INTO artist(id, name, country) VALUES (?, ?, ?)", (id, artist_name, country))
         else:
-            cursor.execute("INSERT INTO artist(name) VALUES (?)", (artist_name,))
+            cursor.execute("INSERT INTO artist(name, country) VALUES (?, ?)", (artist_name,country))
         
         connection.commit()
         return True
@@ -209,13 +210,13 @@ def load_artists():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT id, name FROM artist")
+    cursor.execute("SELECT id, name, country FROM artist")
     
     artists = []
     
     for row in cursor.fetchall():
-        artist_id, artist_name = row
-        artists.append(Artist(artist_name, artist_id))
+        artist_id, artist_name, artist_country = row
+        artists.append(Artist(artist_name, artist_id, artist_country))
     
     connection.close()
     
@@ -314,12 +315,12 @@ def charger_releases():
     
     return df
 
-def update_artist(artist_id, new_artist_name):
+def update_artist(artist_id, new_artist_name, new_country_name):
     try:
         connection = sqlite3.connect(DATABASE_NAME)
         cursor = connection.cursor()
         
-        cursor.execute("UPDATE artist SET name = ? WHERE id = ?", (new_artist_name, artist_id))
+        cursor.execute("UPDATE artist SET name = ?, country= ? WHERE id = ?", (new_artist_name, new_country_name, artist_id))
         
         connection.commit()
         return True

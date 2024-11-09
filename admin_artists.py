@@ -17,15 +17,24 @@ with st.expander("Ajouter un artiste", expanded=False, icon="🎨"):
 
 # Sélection d'un artiste pour le modifier
 with st.expander("Modifier un artiste", expanded=False, icon="🖌️"):
+    # Réinitialiser le formulaire
+    st.session_state.form_submitted = False
     artist_to_update = st.selectbox("Sélectionnez un artiste à modifier", options=load_artists(), format_func=lambda artist: artist.name)
     if artist_to_update:
         with st.form(key='update_artist_form'):
             st.write("Modifier un artiste")
+            if artist_to_update.country is None:
+                artist_to_update.country = ""
             new_artist_name = st.text_input("Nom de l'artiste", value=artist_to_update.name)
+            new_artist_country = st.text_input("Pays de l'artiste", value=artist_to_update.country)
             submit_button = st.form_submit_button(label='Enregistrer les modifications')
             if submit_button:
-                if update_artist(artist_to_update.id, new_artist_name):
+                if update_artist(artist_to_update.id, new_artist_name, new_artist_country):
                     st.write("L'artiste a été modifié avec succès.")
+                    # Réinitialiser le formulaire
+                    st.session_state.form_submitted = True
+                    # Réinitialiser artist_to_update
+                    artist_to_update = None
                 else:
                     st.write("Une erreur est survenue lors de la modification de l'artiste.")
 
