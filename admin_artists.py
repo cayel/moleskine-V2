@@ -8,9 +8,10 @@ from database import load_artists, update_artist, delete_artist, get_releases_co
 with st.expander("Ajouter un artiste", expanded=False, icon="🎨"):
     with st.form(key='artist_form'):
         artist_name = st.text_input("Nom de l'artiste")
+        artist_country = st.text_input("Pays de l'artiste")
         submit_button = st.form_submit_button(label='Enregistrer les modifications')
         if submit_button:
-            if add_artist(artist_name):
+            if add_artist(artist_name, artist_country):
                 st.write("L'artiste a été ajouté avec succès.")
             else:
                 st.write("Une erreur est survenue lors de l'ajout de l'artiste.")
