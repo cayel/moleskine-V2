@@ -313,3 +313,46 @@ def charger_releases():
     connection.close()
     
     return df
+
+def update_artist(artist_id, new_artist_name):
+    try:
+        connection = sqlite3.connect(DATABASE_NAME)
+        cursor = connection.cursor()
+        
+        cursor.execute("UPDATE artist SET name = ? WHERE id = ?", (new_artist_name, artist_id))
+        
+        connection.commit()
+        return True
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+        return False
+    finally:
+        if connection:
+            connection.close()
+
+def delete_artist(artist_id):
+    try:
+        connection = sqlite3.connect(DATABASE_NAME)
+        cursor = connection.cursor()
+        
+        cursor.execute("DELETE FROM artist WHERE id = ?", (artist_id,))
+        
+        connection.commit()
+        return True
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+        return False
+    finally:
+        if connection:
+            connection.close()
+
+def get_releases_count(id_artist):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT COUNT(*) FROM release WHERE artist_id = ?", (id_artist,))
+    result = cursor.fetchone()
+    
+    connection.close()
+    
+    return result[0] if result else 0
