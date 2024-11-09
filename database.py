@@ -210,7 +210,7 @@ def load_artists():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT id, name, country FROM artist")
+    cursor.execute("SELECT id, name, country FROM artist ORDER BY name")
     
     artists = []
     
