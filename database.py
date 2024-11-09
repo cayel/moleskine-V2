@@ -301,7 +301,7 @@ def charger_releases():
     
     # Exécuter une requête SQL
     query = """
-        SELECT release.id, release.title, release.date, artist.name, release.image
+        SELECT release.id, release.title, release.date, artist.name, artist.country, release.image
         FROM release
         JOIN artist ON release.artist_id = artist.id
     """

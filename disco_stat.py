@@ -27,3 +27,8 @@ d = df['date'].dt.year.value_counts()
 chart_data = pd.DataFrame(d)
 st.bar_chart(chart_data, horizontal=False)
 
+st.subheader("Nombre d'albums par pays")
+# Group the data by country
+d = df['country'].value_counts()
+chart_data = pd.DataFrame(d)
+st.bar_chart(chart_data, horizontal=True)
