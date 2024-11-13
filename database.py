@@ -36,7 +36,9 @@ def create_list_table(cursor):
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
             description TEXT,
-            is_private BOOLEAN NOT NULL
+            is_private BOOLEAN NOT NULL,
+            criteria TEXT,
+            created_date TEXT DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
@@ -125,6 +127,15 @@ def add_list_release(list_id, rank, release_id):
     connection.commit()
     connection.close()
 
+def delete_lists_release(list_id):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("DELETE FROM list_release WHERE list_id = ?", (list_id,))
+    
+    connection.commit()
+    connection.close()
+
 def load_lists():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
@@ -146,7 +157,7 @@ def load_list_releases():
     cursor = connection.cursor()
     
     cursor.execute("""
-        SELECT list.id, list.name, list.description, list.is_private, release.title, release.date, artist.name, release.image
+        SELECT list.id, list.name, list.description, list.is_private, release.id, release.title, release.date, artist.name, release.image
         FROM list
         JOIN list_release ON list.id = list_release.list_id
         JOIN release ON list_release.release_id = release.id
@@ -162,7 +173,7 @@ def load_list_releases():
             lists[list_id] = ReleaseList(list_id, list_name, list_description, is_private)
         
         artist = Artist(artist_name, None)
-        release = Release(artist, release_title, release_date, release_image)
+        release = Release(release.id, artist, release_title, release_date, release_image)
         
         lists[list_id].add_release(release)
     
@@ -198,7 +209,7 @@ def load_all_releases():
         release_id, release_title, release_date, artist_name, release_image = row
         
         artist = Artist(artist_name, None)
-        release = Release(artist, release_title, release_date, release_image)
+        release = Release(release_id, artist, release_title, release_date, release_image)
         
         releases.append(release)
     
@@ -233,7 +244,7 @@ def load_releases_from_artists(artists):
         
         for row in cursor.fetchall():
             release_id, release_title, release_date, release_image = row
-            release = Release(artist, release_title, release_date, release_image)
+            release = Release(release_id, artist, release_title, release_date, release_image)
             releases.append(release)
     
     connection.close()
@@ -251,7 +262,7 @@ def load_releases_from_artists_and_years(artists, years, sort_order):
         
         for row in cursor.fetchall():
             release_id, release_title, release_date, release_image = row
-            release = Release(artist, release_title, release_date, release_image)
+            release = Release(release_id, artist, release_title, release_date, release_image)
             releases.append(release)
     
     connection.close()
@@ -357,3 +368,74 @@ def get_releases_count(id_artist):
     connection.close()
     
     return result[0] if result else 0
+
+def create_list(name, description, is_private, criteria):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("INSERT INTO list (name, description, is_private, criteria) VALUES (?, ?, ?, ?)", (name, description, is_private, criteria))
+    
+    connection.commit()
+    connection.close()
+
+def load_lists():
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT id, name, description, is_private FROM list")
+    
+    lists = []
+    
+    for row in cursor.fetchall():
+        list_id, list_name, list_description, is_private = row
+        lists.append(ReleaseList(list_id, list_name, list_description, is_private))
+    
+    connection.close()
+    
+    return lists
+
+def update_list(release_list:ReleaseList):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT release_id FROM list_release WHERE list_id = ?", (release_list.id,))
+    releases = cursor.fetchall()
+    
+    # Suppression des items de la liste
+    cursor.execute("DELETE FROM list_release WHERE list_id = ?", (release_list.id,))
+    
+    for i, release in enumerate(release_list.releases):
+        cursor.execute("INSERT INTO list_release (list_id, rank, release_id) VALUES (?, ?, ?)", (release_list.id, i+1, release.id))
+        #print("INSERT INTO list_release (list_id, rank, release_id) VALUES (?, ?, ?)", (release_list.id, i+1, release.id))
+    
+    connection.commit()
+    connection.close()
+
+
+def load_releases_list(list : ReleaseList):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("""
+        SELECT release.id, release.title, release.date, artist.name, release.image
+        FROM release
+        JOIN list_release ON release.id = list_release.release_id
+        JOIN artist ON release.artist_id = artist.id
+        WHERE list_release.list_id = ?
+        ORDER BY list_release.rank
+    """, (list.id,))
+    
+    releases = []
+    
+    for row in cursor.fetchall():
+        release_id, release_title, release_date, artist_name, release_image = row
+        
+        artist = Artist(artist_name, None)
+        release = Release(release_id, artist, release_title, release_date, release_image)
+        
+        releases.append(release)
+    
+    list.releases = releases
+    connection.close()
+    
+    return list 
