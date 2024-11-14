@@ -35,15 +35,8 @@ with st.expander("Compléter une liste", expanded=False, icon="📝"):
         
         if list_to_update != st.session_state.selected_list:
             load_releases_list(list_to_update)
-            print("Liste sélectionnée a changé")
-            print(f"Liste sélectionnée : {list_to_update}")
-            print(f"Liste en session : {st.session_state.selected_list}")
             st.session_state.selected_list = list_to_update
             st.session_state.albums = [None] * 3  # Réinitialiser les albums sélectionnés
-        else:
-            print("Liste sélectionnée n'a pas changé")
-            print(f"Liste sélectionnée : {list_to_update}")
-            print(f"Liste en session : {st.session_state.selected_list}")
         with st.form(key='update_list_form'):    
             if list_to_update:
                 albums = []

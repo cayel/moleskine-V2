@@ -55,13 +55,17 @@ def generate_table_html_array(releases, num_columns):
             table_html += '<tr>'
         search_query = release.title.replace(' ', '%20')
         spotify_search_url = f"https://open.spotify.com/search/{search_query}"
-        table_html += f"<td rowspan='1'><a href='{spotify_search_url}' target='_blank'><img src='{release.image}' title='{release.title}' style='width:150px; height:auto;'></a></td>"
+        #table_html += f"<td rowspan='1'><a href='{spotify_search_url}' target='_blank'><img src='{release.image}' title='{release.title}' style='width:150px; height:auto;'></a></td>"
+        table_html += f"<td rowspan='1' style='width:{100 / num_columns}%;'><a href='{spotify_search_url}' target='_blank'><img src='{release.image}' title='{release.title}' style='width:100%; height:auto;'></a></td>"
         column_count += 1
         if column_count == num_columns:
             table_html += '</tr>'
             column_count = 0
 
     if column_count != 0:
+        while column_count < num_columns:
+            table_html += '<td></td>'
+            column_count += 1
         table_html += '</tr>'
 
     table_html += '</table>'
