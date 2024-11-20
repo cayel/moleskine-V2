@@ -106,7 +106,7 @@ def add_artist(artist_name, id=None, country=None, discogs_id=None):
         if id:
             cursor.execute("INSERT INTO artist(id, name, country,discogs_id) VALUES (?, ?, ?, ?)", (id, artist_name, country, discogs_id))
         else:
-            cursor.execute("INSERT INTO artist(name, country) VALUES (?, ?, ?)", (artist_name,country, discogs_id))
+            cursor.execute("INSERT INTO artist(name, country, discogs_id) VALUES (?, ?, ?)", (artist_name,country, discogs_id))
         
         connection.commit()
         return True
