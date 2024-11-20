@@ -9,9 +9,10 @@ with st.expander("Ajouter un artiste", expanded=False, icon="🎨"):
     with st.form(key='artist_form'):
         artist_name = st.text_input("Nom de l'artiste")
         artist_country = st.text_input("Pays de l'artiste")
+        artist_discogs_id = st.text_input("Identifiant Discogs de l'artiste")
         submit_button = st.form_submit_button(label='Enregistrer les modifications')
         if submit_button:
-            if add_artist(artist_name, None, artist_country):
+            if add_artist(artist_name, None, artist_country, artist_discogs_id):
                 st.write("L'artiste a été ajouté avec succès.")
             else:
                 st.write("Une erreur est survenue lors de l'ajout de l'artiste.")
@@ -28,9 +29,10 @@ with st.expander("Modifier un artiste", expanded=False, icon="🖌️"):
                 artist_to_update.country = ""
             new_artist_name = st.text_input("Nom de l'artiste", value=artist_to_update.name)
             new_artist_country = st.text_input("Pays de l'artiste", value=artist_to_update.country)
+            new_artist_discogs_id = st.text_input("Identifiant Discogs de l'artiste", value=artist_to_update.discogs_id)
             submit_button = st.form_submit_button(label='Enregistrer les modifications')
             if submit_button:
-                if update_artist(artist_to_update.id, new_artist_name, new_artist_country):
+                if update_artist(artist_to_update.id, new_artist_name, new_artist_country, new_artist_discogs_id):
                     st.write("L'artiste a été modifié avec succès.")
                     # Réinitialiser le formulaire
                     st.session_state.form_submitted = True

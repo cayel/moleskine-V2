@@ -20,7 +20,7 @@ def get_database_version():
         cursor.execute("CREATE TABLE database_version (version INTEGER)")
         cursor.execute("INSERT INTO database_version (version) VALUES (0)")
         connection.commit()
-            
+
     cursor.execute("SELECT version FROM database_version")
     result = cursor.fetchone()
     
@@ -45,7 +45,7 @@ def create_artist_table(cursor):
         CREATE TABLE IF NOT EXISTS artist (
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
-            country TEXT
+            country TEXT          
         )
     """)
 
@@ -98,15 +98,15 @@ def create_database():
     connection.commit()
     connection.close()
 
-def add_artist(artist_name, id=None, country=None):
+def add_artist(artist_name, id=None, country=None, discogs_id=None):
     try:
         connection = sqlite3.connect(DATABASE_NAME)
         cursor = connection.cursor()
         
         if id:
-            cursor.execute("INSERT INTO artist(id, name, country) VALUES (?, ?, ?)", (id, artist_name, country))
+            cursor.execute("INSERT INTO artist(id, name, country,discogs_id) VALUES (?, ?, ?, ?)", (id, artist_name, country, discogs_id))
         else:
-            cursor.execute("INSERT INTO artist(name, country) VALUES (?, ?)", (artist_name,country))
+            cursor.execute("INSERT INTO artist(name, country) VALUES (?, ?, ?)", (artist_name,country, discogs_id))
         
         connection.commit()
         return True
@@ -253,13 +253,13 @@ def load_artists():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT id, name, country FROM artist ORDER BY name")
+    cursor.execute("SELECT id, name, country, discogs_id FROM artist ORDER BY name")
     
     artists = []
     
     for row in cursor.fetchall():
-        artist_id, artist_name, artist_country = row
-        artists.append(Artist(artist_name, artist_id, artist_country))
+        artist_id, artist_name, artist_country, artis_discogs_id = row
+        artists.append(Artist(artist_name, artist_id, artist_country, artis_discogs_id))
     
     connection.close()
     
@@ -320,7 +320,7 @@ def get_all_artists():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT id,name FROM artist")
+    cursor.execute("SELECT * FROM artist")
     result = cursor.fetchall()
     
     connection.close()
@@ -331,7 +331,7 @@ def get_all_releases():
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT id,title,date,artist_id,image,mbid FROM release")
+    cursor.execute("SELECT * FROM release")
     result = cursor.fetchall()
     
     connection.close()
@@ -344,7 +344,7 @@ def charger_releases():
     
     # Exécuter une requête SQL
     query = """
-        SELECT release.id, release.title, release.date, artist.name, artist.country, release.image
+        SELECT release.id, release.title, release.date, artist.name, artist.country, artist.discogs_id, release.image
         FROM release
         JOIN artist ON release.artist_id = artist.id
     """
@@ -358,12 +358,12 @@ def charger_releases():
     
     return df
 
-def update_artist(artist_id, new_artist_name, new_country_name):
+def update_artist(artist_id, new_artist_name, new_country_name, new_discogs_id):
     try:
         connection = sqlite3.connect(DATABASE_NAME)
         cursor = connection.cursor()
         
-        cursor.execute("UPDATE artist SET name = ?, country= ? WHERE id = ?", (new_artist_name, new_country_name, artist_id))
+        cursor.execute("UPDATE artist SET name = ?, country= ?, discogs_id= ? WHERE id = ?", (new_artist_name, new_country_name, new_discogs_id, artist_id))
         
         connection.commit()
         return True
