@@ -79,6 +79,7 @@ with st.expander("Restaurer la base de données", icon="📥"):
             try:
                 drop_database()
                 create_database()
+                maj_database(0)
                 if uploaded_file.type == "application/json":
                     with open(FILE_EXPORT, "wb") as f:
                         f.write(uploaded_file.read())
@@ -90,7 +91,7 @@ with st.expander("Restaurer la base de données", icon="📥"):
                     with gzip.open(FILE_EXPORT_GZ, "rb") as f:
                         data = json.load(f)                        
                 for artist in data["artists"]:
-                    add_artist(artist[1], artist[0])
+                    add_artist(artist[1], artist[0], artist[2], artist[3])
                 for album in data["albums"]:
                     add_release(album[1], album[2], album[3], album[4], album[5], album[0])
                 st.success("La base de données a été restaurée avec succès.")
