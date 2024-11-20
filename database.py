@@ -258,8 +258,8 @@ def load_artists():
     artists = []
     
     for row in cursor.fetchall():
-        artist_id, artist_name, artist_country, artis_discogs_id = row
-        artists.append(Artist(artist_name, artist_id, artist_country, artis_discogs_id))
+        artist_id, artist_name, artist_country, artist_discogs_id = row
+        artists.append(Artist(artist_name, artist_id, artist_country, artist_discogs_id))
     
     connection.close()
     
