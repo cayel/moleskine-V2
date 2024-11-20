@@ -3,7 +3,9 @@ from database import create_database, drop_database, get_id_artist, add_release
 from seed_database import seed_database
 import requests
 import json
-from database import get_all_artists, get_all_releases, add_artist, add_release
+from database import get_all_artists, get_all_releases, add_artist, add_release, get_database_version
+from maj_database import maj_database
+
 
 FILE_EXPORT = "./data/moleskine_backup.json"
 FILE_EXPORT_GZ = "./data/moleskine_backup.json.gz"
@@ -103,4 +105,16 @@ with st.expander("Réinitialiser la base de données",icon="🔄"):
         drop_database()
         create_database()
         seed_database()
+
+with st.expander("Mettre à jour la base de données", icon="🧪"):
+    # Display database version
+    version_db = get_database_version()
+    st.write(f"Version de la base de données : {version_db}")
+    if st.button("Mettre à jour la base de données"):
+        ret = maj_database(version_db)
+        if ret:
+            st.success("La base de données a été mise à jour avec succès.")
+        else:
+            st.error("Une erreur est survenue lors de la mise à jour de la base de données.")
+    
 

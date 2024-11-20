@@ -8,6 +8,38 @@ import pandas as pd
 DATA_DIR = "data"
 DATABASE_NAME = os.path.join(DATA_DIR, "moleskine.db")
 
+def get_database_version():
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    # Check if the database_version table exists
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='database_version'")
+    result = cursor.fetchone()
+
+    if not result:
+        cursor.execute("CREATE TABLE database_version (version INTEGER)")
+        cursor.execute("INSERT INTO database_version (version) VALUES (0)")
+        connection.commit()
+            
+    cursor.execute("SELECT version FROM database_version")
+    result = cursor.fetchone()
+    
+    connection.close()
+    
+    return result[0] if result else 0
+
+def query_database(query, params=None):
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    if params:
+        cursor.execute(query, params)
+    else:
+        cursor.execute(query)
+    
+    connection.commit()
+    connection.close()
+
 def create_artist_table(cursor):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS artist (
