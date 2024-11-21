@@ -96,10 +96,11 @@ if st.session_state['selected_album'] is not None:
             new_album_mbid = st.text_input("MBID", value=album_mbid)
             new_album_date = st.text_input("Date de sortie", value=album_date)
             new_album_image = st.text_input("Image", value=album_image)
+            new_album_discogs_id = st.text_input("Discogs_id")
             submit_button = st.form_submit_button(label='Enregistrer les modifications', disabled=(id_artist == -1))
 
         if submit_button:
-            if add_release(new_album_title, new_album_date, id_artist, new_album_image, new_album_mbid):
+            if add_release(new_album_title, new_album_date, id_artist, new_album_image, new_album_mbid, new_album_discogs_id):
                 st.write("L'album a été ajouté avec succès.")
             else:
                 st.write("Une erreur est survenue lors de l'ajout de l'album.")

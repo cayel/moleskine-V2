@@ -117,20 +117,20 @@ def add_artist(artist_name, id=None, country=None, discogs_id=None):
         if connection:
             connection.close()
 
-def add_release(release_title, release_date, artist_id, release_image=None, release_mbid=None, release_id=None):
+def add_release(release_title, release_date, artist_id, release_image=None, release_mbid=None, release_discogs_id=None, release_id=None):
     try:
         connection = sqlite3.connect(DATABASE_NAME)
         cursor = connection.cursor()
         
         if release_id:
             cursor.execute(
-                "INSERT INTO release(id, title, date, artist_id, image, mbid) VALUES (?, ?, ?, ?, ?, ?)",
-                (release_id, release_title, release_date, artist_id, release_image, release_mbid)
+                "INSERT INTO release(id, title, date, artist_id, image, mbid, discogs_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (release_id, release_title, release_date, artist_id, release_image, release_mbid, release_discogs_id)
             )
         else:
             cursor.execute(
-                "INSERT INTO release(title, date, artist_id, image, mbid) VALUES (?, ?, ?, ?, ?)",
-                (release_title, release_date, artist_id, release_image, release_mbid)
+                "INSERT INTO release(title, date, artist_id, image, mbid, discogs_id) VALUES (?, ?, ?, ?, ?, ?)",
+                (release_title, release_date, artist_id, release_image, release_mbid, release_discogs_id)
             )
         
         connection.commit()
@@ -230,7 +230,7 @@ def load_all_releases():
     cursor = connection.cursor()
     
     cursor.execute("""
-        SELECT release.id, release.title, release.date, artist.name, release.image
+        SELECT release.id, release.title, release.date, artist.name, release.image, release.discogs_id
         FROM release
         JOIN artist ON release.artist_id = artist.id
     """)
@@ -238,10 +238,10 @@ def load_all_releases():
     releases = []
     
     for row in cursor.fetchall():
-        release_id, release_title, release_date, artist_name, release_image = row
+        release_id, release_title, release_date, artist_name, release_image, release_discogs_id = row
         
         artist = Artist(artist_name, None)
-        release = Release(release_id, artist, release_title, release_date, release_image)
+        release = Release(release_id, artist, release_title, release_date, release_image, release_discogs_id)
         
         releases.append(release)
     
@@ -272,11 +272,11 @@ def load_releases_from_artists(artists):
     releases = []
     
     for artist in artists:
-        cursor.execute("SELECT id, title, date, image FROM release WHERE artist_id = ?", (artist.id,))
+        cursor.execute("SELECT id, title, date, image, discogs_id FROM release WHERE artist_id = ?", (artist.id,))
         
         for row in cursor.fetchall():
-            release_id, release_title, release_date, release_image = row
-            release = Release(release_id, artist, release_title, release_date, release_image)
+            release_id, release_title, release_date, release_image, release_discogs_id = row
+            release = Release(release_id, artist, release_title, release_date, release_image, release_discogs_id)
             releases.append(release)
     
     connection.close()
@@ -290,11 +290,11 @@ def load_releases_from_artists_and_years(artists, years, sort_order):
     releases = []
     
     for artist in artists:
-        cursor.execute("SELECT id, title, date, image FROM release WHERE artist_id = ? AND date BETWEEN ? AND ? ORDER BY date", (artist.id, years[0], years[1]+1))
+        cursor.execute("SELECT id, title, date, image, discogs_id FROM release WHERE artist_id = ? AND date BETWEEN ? AND ? ORDER BY date", (artist.id, years[0], years[1]+1))
         
         for row in cursor.fetchall():
-            release_id, release_title, release_date, release_image = row
-            release = Release(release_id, artist, release_title, release_date, release_image)
+            release_id, release_title, release_date, release_image, release_discogs_id = row
+            release = Release(release_id, artist, release_title, release_date, release_image, release_discogs_id)
             releases.append(release)
     
     connection.close()
@@ -449,7 +449,7 @@ def load_releases_list(list : ReleaseList):
     cursor = connection.cursor()
     
     cursor.execute("""
-        SELECT release.id, release.title, release.date, artist.name, release.image
+        SELECT release.id, release.title, release.date, artist.name, release.image, release.discogs_id
         FROM release
         JOIN list_release ON release.id = list_release.release_id
         JOIN artist ON release.artist_id = artist.id
@@ -460,10 +460,10 @@ def load_releases_list(list : ReleaseList):
     releases = []
     
     for row in cursor.fetchall():
-        release_id, release_title, release_date, artist_name, release_image = row
+        release_id, release_title, release_date, artist_name, release_image, release_discogs_id = row
         
         artist = Artist(artist_name, None)
-        release = Release(release_id, artist, release_title, release_date, release_image)
+        release = Release(release_id, artist, release_title, release_date, release_image, release_discogs_id)
         
         releases.append(release)
     

@@ -4,7 +4,7 @@ from seed_database import seed_database
 import requests
 import json
 from database import get_all_artists, get_all_releases, add_artist, add_release, get_database_version
-from maj_database import maj_database
+from maj_database import update_database
 
 
 FILE_EXPORT = "./data/moleskine_backup.json"
@@ -79,7 +79,7 @@ with st.expander("Restaurer la base de données", icon="📥"):
             try:
                 drop_database()
                 create_database()
-                maj_database(0)
+                update_database(0)
                 if uploaded_file.type == "application/json":
                     with open(FILE_EXPORT, "wb") as f:
                         f.write(uploaded_file.read())
@@ -112,7 +112,7 @@ with st.expander("Mettre à jour la base de données", icon="🧪"):
     version_db = get_database_version()
     st.write(f"Version de la base de données : {version_db}")
     if st.button("Mettre à jour la base de données"):
-        ret = maj_database(version_db)
+        ret = update_database(version_db)
         if ret:
             st.success("La base de données a été mise à jour avec succès.")
         else:
